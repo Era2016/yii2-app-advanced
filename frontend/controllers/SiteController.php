@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\base\InvalidParamException;
+use yii\base\Model;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -12,6 +13,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use frontend\models\EntryForm;
 
 /**
  * Site controller
@@ -73,6 +75,18 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    public function actionEntry()
+    {
+        $model = new EntryForm();
+
+        if ($model->load(yii::$app->request->post()) && $model->validate()) {
+            return $this->render('entry-confirm',['model' => $model]);
+        }
+        else {
+            return $this->render('entry',['model' => $model]);
+        }
     }
 
     /**
