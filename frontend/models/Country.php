@@ -10,5 +10,9 @@ use yii\db\ActiveRecord;
 
 class Country extends ActiveRecord
 {
-    
+
+    public static function getCountries()
+    {
+        return self::find()->count('*');
+    }
 }
