@@ -12,6 +12,7 @@ use frontend\models\Country;
 use yii\web\Controller;
 use yii\data\Pagination;
 use yii\db\Exception;
+use frontend\models\City;
 
 class CountryController extends Controller
 {
@@ -44,6 +45,34 @@ class CountryController extends Controller
             'pagination' => $pagination,
         ]);
 
+    }
+
+    /**
+     * 前后端分离，不能用render
+     * 多表查询
+     * where,order by,offset,limit
+     */
+    public function actionPage()
+    {
+        /*$request = Yii::$app->request->get();
+        $where = isset($request['where'])?$request['where']:'';
+        $limit = isset($request['limit'])?$request['limit']:20;
+        $offset = isset($request['offset'])?$request['offset']:0;
+        $a = ['where' => [],
+            'orderBy' => ['id'=>'desc','name'=>'asc'],
+
+        ];
+        $b = json_encode($a);//$b为传递的参数
+
+        $c = json_decode($b, true);
+        return json_encode($c);*/
+        $country = new Country();
+        $ret = $country->find()
+            ->select('city.name, country.name')
+            ->join('join','city','city.countryCode=country.code')->all();
+
+        //return json_encode($ret);
+        return serialize($ret);
     }
 
     public function actionSearch()
