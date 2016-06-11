@@ -8,7 +8,8 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=127.0.0.1;dbname=myblog',
+    //'dsn' => 'mysql:host=127.0.0.1;dbname=myblog',
+    'dsn' => 'mysql:host=127.0.0.1;dbname=blogdemo',
     'username' => 'root',
     'password' => 'fan',
     'charset' => 'utf8',
