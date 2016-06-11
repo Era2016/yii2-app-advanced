@@ -1,9 +1,11 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\blog\Article;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\base\Model;
+use yii\data\Pagination;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -74,7 +76,26 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        /*$sql = Article::find()->select(['title','keywords'])->orderBy('addtime desc');
+        $list = $sql->all();
+        $count = $sql->count();*/
+
+        $count = Article::find()->count();
+        $pagination = new Pagination([
+            'defaultPageSize' => 3,
+            'totalCount' => $count,//$query->count(),
+        ]);
+
+        $list = Article::find()
+            ->select(['title', 'keywords'])
+            ->limit($pagination->limit)
+            ->offset($pagination->offset)
+            ->orderBy('addtime desc')
+            ->all();
+
+        return $this->render(
+            'myblog/index',
+            ['list'=>$list, 'pagination'=>$pagination]);
     }
 
     public function actionEntry()

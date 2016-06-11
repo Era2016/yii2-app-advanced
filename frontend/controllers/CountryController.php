@@ -8,11 +8,11 @@
 namespace frontend\controllers;
 
 use yii;
-use frontend\models\Country;
+use frontend\models\testCountry\Country;
 use yii\web\Controller;
 use yii\data\Pagination;
 use yii\db\Exception;
-use frontend\models\City;
+use frontend\models\testCountry\City;
 
 class CountryController extends Controller
 {
